@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Post a Job</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+    <form method="POST">
+        <h2>Post a Job</h2>
+        <input type="text" name="title" placeholder="Job Title" required>
+        <textarea name="description" placeholder="Job Description" required></textarea>
+        <button type="submit">Post Job</button>
+    </form>
+
+</body>
+</html>

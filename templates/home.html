@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Job Portal - Home</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+    <!-- Navbar -->
+    <div class="navbar">
+        <h2>Job Portal</h2>
+        <div>
+            {% if session.username %}
+                <a href="{{ url_for('post_job') }}">Post a Job</a>
+                <a href="{{ url_for('logout') }}">Logout ({{ session.username }})</a>
+            {% else %}
+                <a href="{{ url_for('login') }}">Login</a>
+                <a href="{{ url_for('register') }}">Register</a>
+            {% endif %}
+        </div>
+    </div>
+
+    <div class="container">
+        <!-- Flash Messages -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="alert alert-{{ category }}">{{ message }}</div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+
+        <h1>Available Jobs</h1>
+        <div class="jobs">
+            {% for job in jobs %}
+                <div class="job">
+                    <h3>{{ job['title'] }}</h3>
+                    <p>{{ job['description'] }}</p>
+                    {% if session.username %}
+                        <form method="post" action="{{ url_for('apply', job_id=job['id']) }}">
+                            <button class="apply-button" type="submit">Apply</button>
+                        </form>
+                    {% endif %}
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+        <p>&copy; 2025 Job Portal. All rights reserved.</p>
+    </div>
+
+</body>
+</html>
